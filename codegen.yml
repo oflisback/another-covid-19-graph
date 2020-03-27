@@ -1,0 +1,12 @@
+overwrite: true
+schema: "https://covid19-graphql.now.sh"
+documents: "./src/**/*.tsx"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
