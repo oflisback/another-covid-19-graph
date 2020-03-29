@@ -6,7 +6,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "tachyons";
 import "./index.css";
-import Graph from "./Graph";
+import Graph from "./GraphWithStatic";
 
 const httpLink = new HttpLink({ uri: "https://covid19-graphql.now.sh" });
 

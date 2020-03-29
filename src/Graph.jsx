@@ -7,12 +7,13 @@ import {
   Tooltip,
 } from "recharts";
 import React from "react";
-import { graphql } from "react-apollo";
-import gql from "graphql-tag";
 import moment from "moment";
 import "./Graph.css";
 
-const Graph = ({ getStuff }) => {
+const Graph = ({ getStuff, staticData }) => {
+
+  let dateToValueMap = {};
+  console.log(getStuff)
   if (getStuff.loading) {
     return (
       <div className="App">
@@ -20,8 +21,6 @@ const Graph = ({ getStuff }) => {
       </div>
     );
   }
-
-  let dateToValueMap = {};
 
   getStuff.results.forEach((entry) => {
     if (dateToValueMap.hasOwnProperty(entry.date)) {
@@ -37,6 +36,8 @@ const Graph = ({ getStuff }) => {
   });
 
   const graphData = [];
+
+  const countriesToShow = ['Italy', 'US']
 
   Object.entries(dateToValueMap).forEach(([date, entry]) => {
     let data = {
@@ -68,12 +69,13 @@ const Graph = ({ getStuff }) => {
   return (
     <div className="App">
       <header className="App-header">
-        Deaths by country since first day of 20+ deaths
+        Deaths by country since first day of 20+ deaths {staticData ? '(static data)' : ''}
         <LineChart
           width={1000}
           height={800}
           data={graphData}
-          margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+          margin={{ top: 50, left: 50, right: 50 }}
+          padding={{ top: 50, left: 50, right: 50 }}
         >
           <XAxis
             dataKey="date"
@@ -85,31 +87,13 @@ const Graph = ({ getStuff }) => {
           <YAxis />
           <Tooltip />
           <CartesianGrid stroke="#f5f5f5" />
-          <Line dataKey="deathsItaly" stroke={colors.Italy} dot={false} />
-          <Line dataKey="deathsUS" stroke={colors.US} dot={false} />
+          {countriesToShow.map(countryName =>
+            <Line dataKey={`deaths${countryName}`} key={countryName} name={countryName} stroke={colors[countryName]} dot={false} />
+          )}
         </LineChart>
       </header>
     </div>
   );
 };
 
-const GET_STUFF = gql`
-  query GetStuff {
-    results(countries: ["Italy", "US"], date: { gt: "3/10/2020" }) {
-      country {
-        name
-      }
-      date
-      deaths
-    }
-  }
-`;
-
-const GraphWithQuery = graphql(GET_STUFF, {
-  name: "getStuff",
-  options: {
-    fetchPolicy: "network-only",
-  },
-})(Graph);
-
-export default GraphWithQuery;
+export default Graph;
