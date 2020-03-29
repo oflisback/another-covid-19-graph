@@ -77,25 +77,25 @@ export type GetStuffQueryVariables = {};
 
 export type GetStuffQuery = (
   { __typename?: 'Query' }
-  & { country?: Maybe<(
-    { __typename?: 'Country' }
-    & Pick<Country, 'name'>
-    & { mostRecent?: Maybe<(
-      { __typename?: 'Result' }
-      & Pick<Result, 'date' | 'confirmed'>
+  & { results?: Maybe<Array<Maybe<(
+    { __typename?: 'Result' }
+    & Pick<Result, 'date' | 'deaths'>
+    & { country?: Maybe<(
+      { __typename?: 'Country' }
+      & Pick<Country, 'name'>
     )> }
-  )> }
+  )>>> }
 );
 
 
 export const GetStuffDocument = gql`
     query GetStuff {
-  country(name: "US") {
-    name
-    mostRecent {
-      date(format: "yyyy-MM-dd")
-      confirmed
+  results(countries: ["US"], date: {gt: "3/10/2020"}) {
+    country {
+      name
     }
+    date
+    deaths
   }
 }
     `;
