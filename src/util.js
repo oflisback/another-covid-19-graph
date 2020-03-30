@@ -19,8 +19,6 @@ export const getDeathsSinceDayZeroGraphData = (
     }
   });
 
-  console.log(dateToValueMap);
-
   const graphData = [];
 
   Object.entries(dateToValueMap).forEach(([date, entry]) => {
@@ -34,8 +32,6 @@ export const getDeathsSinceDayZeroGraphData = (
     });
     graphData.push(data);
   });
-
-  console.log(graphData);
 
   let countryToDayZeroMap = {};
 
@@ -79,7 +75,6 @@ export const getDeathsSinceDayZeroGraphData = (
 
     let insertIndex = 0;
     const dates = Object.keys(dateToValueMap);
-    console.log(dateToValueMap);
     for (let i = startIndex; i < dates.length; i++) {
       dayZeroGraphData[insertIndex] = {
         ...dayZeroGraphData[insertIndex],
