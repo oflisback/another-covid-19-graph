@@ -90,7 +90,7 @@ export type GetStuffQuery = (
 
 export const GetStuffDocument = gql`
     query GetStuff {
-  results(countries: ["US"], date: {gt: "3/10/2020"}) {
+  results(countries: ["Italy", "Spain", "US"], date: {gt: "1/1/2020"}) {
     country {
       name
     }

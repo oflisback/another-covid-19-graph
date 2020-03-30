@@ -1,6 +1,6 @@
 overwrite: true
 schema: "https://covid19-graphql.now.sh"
-documents: "./src/**/*.tsx"
+documents: "./src/**/*.jsx"
 generates:
   src/generated/graphql.tsx:
     plugins:
