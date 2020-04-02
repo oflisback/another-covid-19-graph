@@ -6,7 +6,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "tachyons";
 import "./index.css";
-import Graph from "./GraphWithQuery";
+import Graph from "./GraphWithStatic";
+import { COUNTRIES } from "./constants";
+import SettingsPanel from "./SettingsPanel";
 
 const httpLink = new HttpLink({ uri: "https://covid19-graphql.now.sh" });
 
@@ -18,7 +20,8 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <Graph />
+      <SettingsPanel countries={COUNTRIES} />
+      <Graph countries={COUNTRIES} />
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")

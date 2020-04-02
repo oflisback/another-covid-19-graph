@@ -7,12 +7,11 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import { COUNTRIES } from './constants'
 import React from "react";
 import { getDeathsSinceDayZeroGraphData } from './util';
 import "./Graph.css";
 
-const Graph = ({ getStuff, staticData }) => {
+const Graph = ({ countries, getStuff, staticData }) => {
 
   if (getStuff.loading) {
     return (
@@ -24,16 +23,7 @@ const Graph = ({ getStuff, staticData }) => {
 
   const DAY_ZERO_DEATHS = 10
 
-  const graphData = getDeathsSinceDayZeroGraphData(getStuff.results, { countries: COUNTRIES, startDeaths: DAY_ZERO_DEATHS })
-
-  const colors = {
-    'Italy': '#725675',
-    'Canada': '#376D7F',
-    'Spain': '#2F795D',
-    'Sweden': '#6D7935',
-    'US': '#87464A',
-    'Korea, South': '#0000FF',
-  }
+  const graphData = getDeathsSinceDayZeroGraphData(getStuff.results, { countries: countries.map(country => country.name), startDeaths: DAY_ZERO_DEATHS })
 
   return (
     <div className="App">
@@ -58,8 +48,8 @@ const Graph = ({ getStuff, staticData }) => {
           />
           <Tooltip />
           <CartesianGrid stroke="#f5f5f5" />
-          {COUNTRIES.map(countryName =>
-            <Line dataKey={countryName} key={countryName} name={countryName} stroke={colors[countryName]} dot={false} />
+          {countries.map(country =>
+            <Line dataKey={country.name} key={country.name} name={country.name} stroke={country.color} dot={false} />
           )}
         </LineChart>
       </header>

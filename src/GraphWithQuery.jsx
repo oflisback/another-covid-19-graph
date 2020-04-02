@@ -14,11 +14,12 @@ const GET_STUFF = gql`
   }
 `;
 
-const GraphWithQuery = graphql(GET_STUFF, {
+const GraphWithQuery = ({ countries }) => graphql(GET_STUFF, {
   name: "getStuff",
   options: {
     fetchPolicy: "network-only",
   },
+  props: ({ ownProps: { countries }, staticData: false })
 })(Graph);
 
 export default GraphWithQuery;
