@@ -64,8 +64,11 @@ export const getDeathsSinceDayZeroGraphData = (
 
   console.log("First dayzero: " + minDayZero.format(DATE_FORMAT));
 
-  const nbrOfDays = moment.duration(lastDay.diff(minDayZero)).asDays() + 1;
+  const nbrOfDays = Math.round(
+    moment.duration(lastDay.diff(minDayZero)).asDays() + 1
+  );
 
+  console.log(nbrOfDays);
   let dayZeroGraphData = new Array(nbrOfDays).fill({});
 
   countries.forEach((country) => {
