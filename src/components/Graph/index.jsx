@@ -1,7 +1,6 @@
 import {
   LineChart,
   Line,
-  Text,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -68,53 +67,45 @@ const Graph = ({ countries, getStuff, options }) => {
   }
 
   let yAxisTitle
-  let dY
-
   if (options.cumulative) {
     if (options.perCapita) {
       yAxisTitle = 'Cumulative deaths per 100k inhibitants'
-      dY = 600
     } else {
       yAxisTitle = 'Cumulative deaths'
-      dY = 460
     }
   } else {
     if (options.perCapita) {
       yAxisTitle = 'Deaths per day per 100k inhibitants'
-      dY = 580
     } else {
       yAxisTitle = 'Deaths per day'
-      dY = 450
     }
   }
 
   return (
-    <div className="App">
+    <div className="App" style={{ position: 'relative' }}>
       <header className="App-header">
+        <div style={{ position: 'absolute', left: '-80px', transform: 'rotate(-90deg)' }}>{yAxisTitle}</div>
         Covid-19
         <LineChart
           width={dimensions.width - 200 - 1}
           height={dimensions.height - 100}
           data={graphData}
-          margin={{ bottom: 100, top: 100, left: 100, right: 100 }}
-          padding={{ bottom: 50, top: 50, left: 50, right: 50 }}
+          margin={{ bottom: 0, top: 50, left: 150, right: 50 }}
         >
           <XAxis
             dataKey="day"
             height={100}
-            label={<Text x={0} y={0} dx={580} dy={720} offset={0}>Days since 10 deaths</Text>}
             interval={1}
             tickMargin={30}
           />
-          <YAxis
-            label={<Text x={0} y={0} dx={50} dy={dY} offset={0} angle={-90}>{yAxisTitle}</Text>}
-          />
+          <YAxis />
           <Tooltip labelFormatter={day => `Day ${day}`} />
           <CartesianGrid stroke="#f5f5f5" />
           {enabledCountries.map(country =>
             <Line dataKey={country.name} key={country.name} name={country.name} stroke={country.color} dot={false} />
           )}
         </LineChart>
+        Days since 10 deaths in country
       </header>
     </div>
   );
