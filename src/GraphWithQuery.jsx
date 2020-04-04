@@ -2,7 +2,8 @@ import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 import Graph from './Graph'
 
-const GET_STUFF = gql`
+// Create our enhancer function.
+const withQuery = graphql(gql`
   query GetStuff {
     results(countries: ["Canada", "Italy", "Japan", "Korea, South", "Spain", "Sweden", "US"], date: { gt: "1/1/2020" }) {
       country {
@@ -11,15 +12,13 @@ const GET_STUFF = gql`
       date
       deaths
     }
+  }`,
+  {
+    name: "getStuff",
+    options: {
+      fetchPolicy: "network-only",
+    }
   }
-`;
+);
 
-const GraphWithQuery = ({ countries }) => graphql(GET_STUFF, {
-  name: "getStuff",
-  options: {
-    fetchPolicy: "network-only",
-  },
-  props: ({ ownProps: { countries }, staticData: false })
-})(Graph);
-
-export default GraphWithQuery;
+export default withQuery(Graph)

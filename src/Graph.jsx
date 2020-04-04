@@ -11,7 +11,7 @@ import React from "react";
 import { getDeathsSinceDayZeroGraphData } from './util';
 import "./Graph.css";
 
-const Graph = ({ countries, getStuff, staticData }) => {
+const Graph = ({ countries, getStuff }) => {
 
   if (getStuff.loading) {
     return (

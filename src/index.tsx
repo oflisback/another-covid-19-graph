@@ -6,7 +6,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "tachyons";
 import "./index.css";
-import Graph from "./GraphWithStatic";
+import Graph from "./GraphWithQuery";
 import { COUNTRIES } from "./constants";
 import SettingsPanel from "./SettingsPanel";
 
