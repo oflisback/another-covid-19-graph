@@ -9,7 +9,7 @@ import Drawer from "@material-ui/core/Drawer";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-const SettingsPanel = ({ countries }) => {
+const SettingsPanel = ({ countries, toggleEnabled }) => {
   const [open, setOpen] = useState(true);
 
   useEffect(() => {
@@ -77,8 +77,8 @@ const SettingsPanel = ({ countries }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={false}
-                        onChange={() => {}}
+                        checked={country.enabled}
+                        onChange={e => toggleEnabled(country.name)}
                         name={country.name}
                       />
                     }
@@ -97,6 +97,7 @@ const SettingsPanel = ({ countries }) => {
 
 SettingsPanel.propTypes = {
   countries: PropTypes.array.isRequired,
+  toggleEnabled: PropTypes.func.isRequired
 };
 
 export default SettingsPanel;

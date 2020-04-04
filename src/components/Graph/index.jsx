@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "recharts";
 import React from "react";
-import { getDeathsSinceDayZeroGraphData } from './util';
+import { getDeathsSinceDayZeroGraphData } from 'common/util';
 import "./Graph.css";
 
 const Graph = ({ countries, getStuff }) => {
@@ -23,7 +23,9 @@ const Graph = ({ countries, getStuff }) => {
 
   const DAY_ZERO_DEATHS = 10
 
-  const graphData = getDeathsSinceDayZeroGraphData(getStuff.results, { countries: countries.map(country => country.name), startDeaths: DAY_ZERO_DEATHS })
+  const enabledCountries = countries.filter(country => country.enabled)
+
+  const graphData = getDeathsSinceDayZeroGraphData(getStuff.results, { countries: enabledCountries.map(country => country.name), startDeaths: DAY_ZERO_DEATHS })
 
   return (
     <div className="App">
@@ -48,7 +50,7 @@ const Graph = ({ countries, getStuff }) => {
           />
           <Tooltip />
           <CartesianGrid stroke="#f5f5f5" />
-          {countries.map(country =>
+          {enabledCountries.map(country =>
             <Line dataKey={country.name} key={country.name} name={country.name} stroke={country.color} dot={false} />
           )}
         </LineChart>
