@@ -92,8 +92,6 @@ export const getDeathsSinceDayZeroGraphData = (
     moment.max([moment(a, DATE_FORMAT), moment(b, DATE_FORMAT)])
   );
 
-  console.log(countryToDayZeroMap);
-
   const nbrOfDays = Math.round(
     moment.duration(lastDay.diff(minDayZero)).asDays() + 1
   );

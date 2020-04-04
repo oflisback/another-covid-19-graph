@@ -8,11 +8,28 @@ import {
   Tooltip,
 } from "recharts";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getDeathsSinceDayZeroGraphData } from 'common/util';
 import "./Graph.css";
 
 const Graph = ({ countries, getStuff, options }) => {
+  const [dimensions, setDimensions] = useState({ 
+    height: window.innerHeight,
+    width: window.innerWidth
+  })
+  const handleResize = () => {
+    setDimensions({
+      height: window.innerHeight,
+      width: window.innerWidth
+    })
+  }
+
+  useEffect(() => {
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    })
 
   if (getStuff.loading) {
     return (
@@ -55,8 +72,8 @@ const Graph = ({ countries, getStuff, options }) => {
       <header className="App-header">
         Covid-19
         <LineChart
-          width={1400}
-          height={800}
+          width={dimensions.width - 200 - 1}
+          height={dimensions.height - 100}
           data={graphData}
           margin={{ bottom: 100, top: 100, left: 100, right: 100 }}
           padding={{ bottom: 50, top: 50, left: 50, right: 50 }}
