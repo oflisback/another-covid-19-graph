@@ -16,14 +16,22 @@ const Graph = ({ countries, getStuff }) => {
   if (getStuff.loading) {
     return (
       <div className="App">
-        <header className="App-header">Loading jao</header>
+        <header className="App-header">Fetching data ...</header>
       </div>
     );
   }
 
   const DAY_ZERO_DEATHS = 10
-
   const enabledCountries = countries.filter(country => country.enabled)
+
+  if (enabledCountries.length === 0) {
+    return (
+      <div className="App">
+        <header className="App-header">Select at least one country</header>
+      </div>
+    );
+  }
+
 
   const graphData = getDeathsSinceDayZeroGraphData(getStuff.results, { countries: enabledCountries.map(country => country.name), startDeaths: DAY_ZERO_DEATHS })
 

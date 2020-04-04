@@ -54,9 +54,15 @@ export const getDeathsSinceDayZeroGraphData = (
     });
   });
 
-  const minDayZero = Object.values(countryToDayZeroMap).reduce((a, b) =>
-    moment.min([moment(a, DATE_FORMAT), moment(b, DATE_FORMAT)])
-  );
+  const dayZeroValues = Object.values(countryToDayZeroMap);
+  const minDayZero =
+    dayZeroValues.length === 1
+      ? moment(dayZeroValues[0])
+      : dayZeroValues.reduce((a, b) =>
+          moment.min([moment(a, DATE_FORMAT), moment(b, DATE_FORMAT)])
+        );
+
+  console.log("minDayZero: ", minDayZero);
 
   const lastDay = Object.keys(dateToValueMap).reduce((a, b) =>
     moment.max([moment(a, DATE_FORMAT), moment(b, DATE_FORMAT)])
