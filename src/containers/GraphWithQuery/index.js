@@ -11,10 +11,13 @@ const withQuery = graphql(
         countries: [
           "Canada"
           "Italy"
+          "France"
+          "Germany"
           "Japan"
           "Korea, South"
           "Spain"
           "Sweden"
+          "United Kingdom"
           "US"
         ]
         date: { gt: "1/1/2020" }

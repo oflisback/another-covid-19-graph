@@ -33,7 +33,7 @@ const Graph = ({ countries, getStuff, options }) => {
 
   if (getStuff.loading) {
     return (
-      <div className="App">
+      <div className="App" style={{ flex: 1 }}>
         <header className="App-header">Fetching data ...</header>
       </div>
     );
@@ -44,7 +44,7 @@ const Graph = ({ countries, getStuff, options }) => {
 
   if (enabledCountries.length === 0) {
     return (
-      <div className="App">
+      <div className="App" style={{ flex: 1 }}>
         <header className="App-header">Select at least one country</header>
       </div>
     );
