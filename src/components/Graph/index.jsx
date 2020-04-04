@@ -84,7 +84,7 @@ const Graph = ({ countries, getStuff, options }) => {
   return (
     <div className="App" style={{ position: 'relative' }}>
       <header className="App-header">
-        <div style={{ position: 'absolute', left: '-80px', transform: 'rotate(-90deg)' }}>{yAxisTitle}</div>
+        <div style={{ position: 'absolute', left: '50px', transform: 'translateX(-50%) translateY(-50%) rotate(-90deg)' }}>{yAxisTitle}</div>
         Covid-19
         <LineChart
           width={dimensions.width - 200 - 1}
