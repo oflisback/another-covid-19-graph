@@ -36,7 +36,8 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-query": "REACT_APP_STATIC_DATA=false react-scripts start",
+    "start-static": "REACT_APP_STATIC_DATA=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
