@@ -67,6 +67,27 @@ const Graph = ({ countries, getStuff, options }) => {
     })
   }
 
+  let yAxisTitle
+  let dY
+
+  if (options.cumulative) {
+    if (options.perCapita) {
+      yAxisTitle = 'Cumulative deaths per 100k inhibitants'
+      dY = 600
+    } else {
+      yAxisTitle = 'Cumulative deaths'
+      dY = 460
+    }
+  } else {
+    if (options.perCapita) {
+      yAxisTitle = 'Deaths per day per 100k inhibitants'
+      dY = 580
+    } else {
+      yAxisTitle = 'Deaths per day'
+      dY = 450
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -86,7 +107,7 @@ const Graph = ({ countries, getStuff, options }) => {
             tickMargin={30}
           />
           <YAxis
-            label={<Text x={0} y={0} dx={50} dy={400} offset={0} angle={-90}>Deaths</Text>}
+            label={<Text x={0} y={0} dx={50} dy={dY} offset={0} angle={-90}>{yAxisTitle}</Text>}
           />
           <Tooltip labelFormatter={day => `Day ${day}`} />
           <CartesianGrid stroke="#f5f5f5" />
