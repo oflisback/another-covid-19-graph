@@ -7,11 +7,12 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import PropTypes from "prop-types";
 import React from "react";
 import { getDeathsSinceDayZeroGraphData } from 'common/util';
 import "./Graph.css";
 
-const Graph = ({ countries, getStuff }) => {
+const Graph = ({ countries, getStuff, options }) => {
 
   if (getStuff.loading) {
     return (
@@ -33,7 +34,21 @@ const Graph = ({ countries, getStuff }) => {
   }
 
 
-  const graphData = getDeathsSinceDayZeroGraphData(getStuff.results, { countries: enabledCountries.map(country => country.name), startDeaths: DAY_ZERO_DEATHS })
+  let graphData = getDeathsSinceDayZeroGraphData(getStuff.results, { countries: enabledCountries.map(country => country.name), cumulative: options.cumulative, startDeaths: DAY_ZERO_DEATHS })
+
+  if (options.perCapita) {
+    enabledCountries.forEach(country => {
+      graphData = graphData.map(data => ({ ...data, [country.name]: data[country.name] ? Number((data[country.name] / (country.population / 100000)).toFixed(2)): undefined }))
+    })
+    // Fill holes in graphData, for perCapita when there were no deaths we set the value to undefined, but it should be zero.
+    enabledCountries.forEach(country => {
+      const lastIndex = graphData.map(data => data[country.name] !== undefined).lastIndexOf(true);
+      graphData = graphData.map((data, index) => ({
+        ...data,
+        [country.name]: index < lastIndex && !data[country.name] ? 0: data[country.name]
+      }))
+    })
+  }
 
   return (
     <div className="App">
@@ -56,7 +71,7 @@ const Graph = ({ countries, getStuff }) => {
           <YAxis
             label={<Text x={0} y={0} dx={50} dy={400} offset={0} angle={-90}>Deaths</Text>}
           />
-          <Tooltip />
+          <Tooltip labelFormatter={day => `Day ${day}`} />
           <CartesianGrid stroke="#f5f5f5" />
           {enabledCountries.map(country =>
             <Line dataKey={country.name} key={country.name} name={country.name} stroke={country.color} dot={false} />
@@ -66,5 +81,12 @@ const Graph = ({ countries, getStuff }) => {
     </div>
   );
 };
+
+Graph.propTypes = {
+  countries: PropTypes.array.isRequired,
+  getStuff: PropTypes.object.isRequired,
+  options: PropTypes.object.isRequired,
+};
+
 
 export default Graph;

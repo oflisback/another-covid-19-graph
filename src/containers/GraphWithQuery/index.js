@@ -40,6 +40,7 @@ const GraphWithQuery = withQuery(Graph);
 const mapStateToProps = (state, ownProps) => ({
   countries: state.countries,
   getStuff: ownProps.getStuff,
+  options: state.options,
 });
 
 export default connect(mapStateToProps)(GraphWithQuery);

@@ -1,23 +1,51 @@
 const moment = require("moment");
 
+const DATE_FORMAT = "YYYY-M-D";
+
 export const getDeathsSinceDayZeroGraphData = (
   results,
-  { countries, startDeaths }
+  { countries, cumulative, startDeaths }
 ) => {
   let dateToValueMap = {};
 
   results.forEach((entry) => {
+    let deaths = entry.deaths;
     if (dateToValueMap.hasOwnProperty(entry.date)) {
       dateToValueMap[entry.date] = {
         ...dateToValueMap[entry.date],
-        [entry.country.name]: { deaths: entry.deaths },
+        [entry.country.name]: {
+          deaths,
+        },
       };
     } else {
       dateToValueMap[entry.date] = {
-        [entry.country.name]: { deaths: entry.deaths },
+        [entry.country.name]: { deaths },
       };
     }
   });
+
+  if (!cumulative) {
+    Object.keys(dateToValueMap).forEach((date) => {
+      const prevDay = moment(date, DATE_FORMAT)
+        .subtract(1, "days")
+        .format(DATE_FORMAT);
+      countries.forEach((countryName) => {
+        if (dateToValueMap[date][countryName]) {
+          dateToValueMap[date] = {
+            ...dateToValueMap[date],
+            [countryName]: {
+              ...dateToValueMap[date][countryName],
+              dayDeaths:
+                dateToValueMap[prevDay] && dateToValueMap[prevDay][countryName]
+                  ? dateToValueMap[date][countryName].deaths -
+                    dateToValueMap[prevDay][countryName].deaths
+                  : 0,
+            },
+          };
+        }
+      });
+    });
+  }
 
   const graphData = [];
 
@@ -34,8 +62,6 @@ export const getDeathsSinceDayZeroGraphData = (
   });
 
   let countryToDayZeroMap = {};
-
-  const DATE_FORMAT = "YYYY-M-D";
 
   countries.forEach((country) => {
     let minimumDayZeroDate = moment();
@@ -62,19 +88,16 @@ export const getDeathsSinceDayZeroGraphData = (
           moment.min([moment(a, DATE_FORMAT), moment(b, DATE_FORMAT)])
         );
 
-  console.log("minDayZero: ", minDayZero);
-
   const lastDay = Object.keys(dateToValueMap).reduce((a, b) =>
     moment.max([moment(a, DATE_FORMAT), moment(b, DATE_FORMAT)])
   );
 
-  console.log("First dayzero: " + minDayZero.format(DATE_FORMAT));
+  console.log(countryToDayZeroMap);
 
   const nbrOfDays = Math.round(
     moment.duration(lastDay.diff(minDayZero)).asDays() + 1
   );
 
-  console.log(nbrOfDays);
   let dayZeroGraphData = new Array(nbrOfDays).fill({});
 
   countries.forEach((country) => {
@@ -88,7 +111,11 @@ export const getDeathsSinceDayZeroGraphData = (
       dayZeroGraphData[insertIndex] = {
         ...dayZeroGraphData[insertIndex],
         day: insertIndex,
-        [country]: dateToValueMap[dates[i]][country].deaths,
+        [country]: dateToValueMap[dates[i]]
+          ? cumulative
+            ? dateToValueMap[dates[i]][country].deaths
+            : dateToValueMap[dates[i]][country].dayDeaths
+          : 0,
       };
       insertIndex++;
     }

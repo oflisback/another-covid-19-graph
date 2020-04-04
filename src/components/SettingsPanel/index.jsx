@@ -9,7 +9,7 @@ import Drawer from "@material-ui/core/Drawer";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-const SettingsPanel = ({ countries, toggleEnabled }) => {
+const SettingsPanel = ({ countries, options, toggleCountryEnabled, toggleCumulative, togglePerCapita }) => {
   const [open, setOpen] = useState(true);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const SettingsPanel = ({ countries, toggleEnabled }) => {
                     control={
                       <Checkbox
                         checked={country.enabled}
-                        onChange={e => toggleEnabled(country.name)}
+                        onChange={e => toggleCountryEnabled(country.name)}
                         name={country.name}
                       />
                     }
@@ -86,6 +86,31 @@ const SettingsPanel = ({ countries, toggleEnabled }) => {
                     label={country.name}
                   />
                 ))}
+              </FormGroup>
+              <FormLabel component="legend">Options</FormLabel>
+              <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={options.cumulative}
+                        onChange={() => toggleCumulative()}
+                        name="Cumulative"
+                      />
+                    }
+                    key="cumulative"
+                    label="Cumulative"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={options.perCapita}
+                        onChange={() => togglePerCapita()}
+                        name="Cumulative"
+                      />
+                    }
+                    key="perCapita"
+                    label="Per 100k inhabitants"
+                  />
               </FormGroup>
             </FormControl>
           </div>
@@ -97,7 +122,10 @@ const SettingsPanel = ({ countries, toggleEnabled }) => {
 
 SettingsPanel.propTypes = {
   countries: PropTypes.array.isRequired,
-  toggleEnabled: PropTypes.func.isRequired
+  options: PropTypes.object.isRequired,
+  toggleCountryEnabled: PropTypes.func.isRequired,
+  toggleCumulative: PropTypes.func.isRequired,
+  togglePerCapita: PropTypes.func.isRequired
 };
 
 export default SettingsPanel;
