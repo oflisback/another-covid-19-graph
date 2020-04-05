@@ -9,12 +9,15 @@ const withQuery = graphql(
     query GetStuff {
       results(
         countries: [
+          "Denmark"
           "Canada"
+          "Finland"
           "Italy"
           "France"
           "Germany"
           "Japan"
           "Korea, South"
+          "Norway"
           "Spain"
           "Sweden"
           "United Kingdom"

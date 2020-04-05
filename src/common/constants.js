@@ -1,51 +1,66 @@
 export const COUNTRIES = [
   {
-    color: "#C76A63",
+    color: "#894841",
+    name: "Denmark",
+    population: 5.6 * 1000 * 1000,
+  },
+  {
+    color: "#8B4A57",
     name: "Canada",
     population: 37.6 * 1000 * 1000,
   },
   {
-    color: "#BE6C87",
+    color: "#83516C",
     name: "Italy",
     population: 60.5 * 1000 * 1000,
   },
   {
-    color: "#9E7AA3",
+    color: "#705C7D",
+    name: "Finland",
+    population: 5.5 * 1000 * 1000,
+  },
+  {
+    color: "#556885",
     name: "France",
     population: 67 * 1000 * 1000,
   },
   {
-    color: "#6C89AD",
+    color: "#377183",
     name: "Germany",
     population: 82.8 * 1000 * 1000,
   },
   {
-    color: "#39939F",
+    color: "#237977",
     name: "Japan",
     population: 126.8 * 1000 * 1000,
   },
   {
-    color: "#33977F",
+    color: "#2E7D64",
     name: "Korea, South",
     population: 51.5 * 1000 * 1000,
   },
   {
-    color: "#5A965A",
+    color: "#497F4F",
+    name: "Norway",
+    population: 5.4 * 1000 * 1000,
+  },
+  {
+    color: "#677F3C",
     name: "Spain",
     population: 46.7 * 1000 * 1000,
   },
   {
-    color: "#848F3E",
+    color: "#857B32",
     name: "Sweden",
     population: 10.1 * 1000 * 1000,
   },
   {
-    color: "#AB8339",
+    color: "#A17535",
     name: "United Kingdom",
     population: 66.4 * 1000 * 1000,
   },
   {
-    color: "#C7754F",
+    color: "#B86E46",
     name: "US",
     population: 327.2 * 1000 * 1000,
   },
