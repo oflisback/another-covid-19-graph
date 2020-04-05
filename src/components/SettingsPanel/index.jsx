@@ -70,6 +70,7 @@ const SettingsPanel = ({ countries, options, toggleCountryEnabled, toggleCumulat
           />
         </FormGroup>
       </FormControl>
+    Data from <a href="https://systems.jhu.edu/research/public-health/ncov/">John Hopkins University</a> via this <a href="https://github.com/rlindskog/covid19-graphql">GraphQL API</a>.
     </div>
   );
 };
