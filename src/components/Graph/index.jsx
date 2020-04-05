@@ -30,9 +30,17 @@ const Graph = ({ countries, getStuff, options }) => {
       };
     })
 
+  if (dimensions.width < 1000 || dimensions.height < 800) {
+    return (
+      <div className="App" style={{ flex: 1, height: '100vh' }}>
+        <header className="App-header">Use desktop resolution to view graph</header>
+      </div>
+    );
+  }
+
   if (getStuff.loading) {
     return (
-      <div className="App" style={{ flex: 1 }}>
+      <div className="App" style={{ flex: 1, height: '100vh' }}>
         <header className="App-header">Fetching data ...</header>
       </div>
     );
