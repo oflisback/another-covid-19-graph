@@ -6,7 +6,7 @@ The project uses [Recharts](https://recharts.org/en-US/) for the graph and this 
 
 ### Live version
 
-See the graph at [https://covid-19.snart.ninja](https://covid-19.snart.ninja)
+See the graph at [https://another-covid-19.netlify.com](https://another-covid-19.netlify.com)
 
 ### Running
 
