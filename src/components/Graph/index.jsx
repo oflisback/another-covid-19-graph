@@ -110,7 +110,7 @@ const Graph = ({ countries, getStuff, options }) => {
           <Tooltip labelFormatter={day => `Day ${day}`} />
           <CartesianGrid stroke="#f5f5f5" />
           {enabledCountries.map(country =>
-            <Line dataKey={country.name} key={country.name} name={country.name} stroke={country.color} dot={false} />
+            <Line dataKey={country.name} key={country.name} name={country.name} stroke={country.color} strokeWidth={2} dot={false} />
           )}
         </LineChart>
         Days since 10 deaths in country
